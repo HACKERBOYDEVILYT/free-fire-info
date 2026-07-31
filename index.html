@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Robiul FF Info</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
+
+    :root {
+      --bg: #0d0d0d;
+      --card: #1a1a1a;
+      --card-hover: #252525;
+      --primary: #ff4655;
+      --primary-dark: #e03a47;
+      --text: #ffffff;
+      --text-muted: #aaaaaa;
+      --border: #333;
+      --success: #00d26a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Roboto', 'Noto Sans Bengali', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 90px;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+      padding: 14px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #ff4655, #ff8a00, #ff4655);
+      background-size: 200% 200%;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 70, 85, 0.5);
+      animation: logoPulse 2.5s ease-in-out infinite, logoGradient 4s ease infinite;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-icon::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent 40%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 60%
+      );
+      animation: logoShine 3s ease-in-out infinite;
+    }
+
+    @keyframes logoPulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(255, 70, 85, 0.5);
+      }
+      50% {
+        transform: scale(1.08);
+        box-shadow: 0 6px 25px rgba(255, 70, 85, 0.8);
+      }
+    }
+
+    @keyframes logoGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes logoShine {
+      0% { transform: translateX(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) rotate(45deg); }
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-text .brand {
+      font-size: 18px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ff4655, #ff8a00, #ffffff, #ff8a00, #ff4655);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: textShine 2.5s linear infinite, textPulse 2s ease-in-out infinite;
+      line-height: 1.2;
+    }
+
+    @keyframes textShine {
+      0% { background-position: 0% center; }
+      100% { background-position: 300% center; }
+    }
+
+    @keyframes textPulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.35); }
+    }
+
+    .logo-text .sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .lang-btn, .admin-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .lang-btn:active, .admin-btn:active {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .admin-btn {
+      background: #222;
+      border-color: #444;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      background: var(--card);
+      margin: 16px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .tab {
+      flex: 1;
+      padding: 14px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: var(--text-muted);
+    }
+
+    .tab.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Search */
+    .search-box {
+      margin: 0 16px 16px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 14px 16px 14px 44px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 15px;
+      outline: none;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+    }
+
+    .search-box::before {
+      content: "🔍";
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+    }
+
+    /* Content */
+    .content {
+      padding: 0 16px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .card:active {
+      background: var(--card-hover);
+      transform: scale(0.98);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), #ff8a00);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .card-info h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .card-info .role {
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .card-body {
+      margin-top: 14px;
+      display: none;
+    }
+
+    .card.open .card-body {
+      display: block;
+    }
+
+    .skill-box {
+      background: #111;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .skill-box .label {
+      font-size: 12px;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .skill-box p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .gun-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .gun-stat {
+      background: #111;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .gun-stat .value {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .gun-stat .name {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Detail Page */
+    .detail-page {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      z-index: 150;
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .detail-page.show {
+      display: flex;
+    }
+
+    .detail-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .detail-bg-img {
+      width: 150%;
+      height: 150%;
+      object-fit: cover;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.18;
+      filter: blur(10px) saturate(1.5);
+      animation: bgFloat 14s ease-in-out infinite alternate;
+    }
+
+    .detail-bg-emoji {
+      position: absolute;
+      font-size: 200px;
+      opacity: 0.1;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: bgFloat 12s ease-in-out infinite alternate;
+      filter: blur(1px);
+    }
+
+    @keyframes bgFloat {
+      0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+      100% { transform: translate(-47%, -53%) scale(1.1) rotate(4deg); }
+    }
+
+    .detail-page .detail-header,
+    .detail-page .detail-body {
+      position: relative;
+      z-index: 1;
+    }
+
+    .detail-header {
+      background: rgba(26, 26, 26, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .back-btn {
+      width: 38px;
+      height: 38px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .back-btn:active {
+      background: var(--primary);
+    }
+
+    .detail-header h2 {
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .detail-body {
+      padding: 24px 20px;
+      flex: 1;
+    }
+
+    .detail-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #ff4655, #ff8a00);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      margin: 0 auto 20px;
+      box-shadow: 0 8px 25px rgba(255, 70, 85, 0.35);
+      overflow: hidden;
+    }
+
+    .detail-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .detail-name {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .detail-role {
+      text-align: center;
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .detail-section {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+      border: 1px solid var(--border);
+    }
+
+    .detail-section .label {
+      font-size: 12px;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .detail-section p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .detail-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .detail-stat {
+      background: #111;
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .detail-stat .value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .detail-stat .name {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ========== ADMIN PANEL ========== */
+    .admin-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      z-index: 200;
+      display: none;
+      overflow-y: auto;
+      padding: 20px 16px;
+    }
+
+    .admin-overlay.show {
+      display: block;
+    }
+
+    .admin-panel {
+      background: var(--card);
+      border-radius: 16px;
+      max-width: 500px;
+      margin: 0 auto;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .admin-header {
+      background: linear-gradient(135deg, #ff4655, #ff8a00);
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .admin-header h2 {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .close-btn {
+      background: rgba(0,0,0,0.3);
+      border: none;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .admin-body {
+      padding: 20px;
+    }
+
+    .admin-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .admin-tab {
+      flex: 1;
+      min-width: 90px;
+      padding: 10px 6px;
+      text-align: center;
+      background: #111;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .admin-tab.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .manage-list {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .manage-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #111;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .manage-item img, .manage-item .m-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: linear-gradient(135deg, #ff4655, #ff8a00);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .manage-item .m-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .manage-item .m-info h4 {
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .manage-item .m-info span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .manage-item .edit-btn {
+      background: var(--primary);
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .form-group textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .save-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .save-btn:active {
+      background: var(--primary-dark);
+    }
+
+    .admin-msg {
+      text-align: center;
+      padding: 10px;
+      margin-top: 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: none;
+    }
+
+    .admin-msg.success {
+      background: rgba(0, 210, 106, 0.15);
+      color: var(--success);
+      display: block;
+    }
+
+    .admin-msg.error {
+      background: rgba(255, 70, 85, 0.15);
+      color: var(--primary);
+      display: block;
+    }
+
+    .password-box {
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .password-box input {
+      width: 100%;
+      padding: 14px;
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: white;
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: 12px;
+      outline: none;
+    }
+
+    .password-box button {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    /* Image upload */
+    .img-upload-box {
+      border: 2px dashed #444;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+      background: #111;
+    }
+
+    .img-upload-box:active {
+      border-color: var(--primary);
+    }
+
+    .img-upload-box input {
+      display: none;
+    }
+
+    .img-preview {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      object-fit: cover;
+      margin: 0 auto 8px;
+      display: none;
+      border: 2px solid var(--primary);
+    }
+
+    .img-preview.show {
+      display: block;
+    }
+
+    .img-upload-text {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-area">
+      <div class="logo-icon">R</div>
+      <div class="logo-text">
+        <div class="brand">Robiul</div>
+        <div class="sub" id="app-subtitle">FF Character & Gun Guide</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="admin-btn" onclick="openAdmin()">Admin</button>
+      <button class="lang-btn" onclick="toggleLang()" id="langBtn">বাংলা</button>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('characters')" id="tab-char">Characters</div>
+    <div class="tab" onclick="switchTab('guns')" id="tab-gun">Guns</div>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search character or gun..." oninput="filterItems()">
+  </div>
+
+  <div class="content">
+    <div id="characters-section">
+      <div class="section-title" id="char-title">Popular Characters</div>
+      <div id="characters-list"></div>
+    </div>
+
+    <div id="guns-section" class="hidden">
+      <div class="section-title" id="gun-title">Popular Weapons</div>
+      <div id="guns-list"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Robiul FF Info App<br>
+    For educational purpose only • Not affiliated with Garena
+  </div>
+
+  <!-- DETAIL PAGE -->
+  <div class="detail-page" id="detailPage">
+    <div class="detail-bg" id="detailBg"></div>
+    <div class="detail-header">
+      <button class="back-btn" onclick="closeDetail()">←</button>
+      <h2 id="detailTitle">Details</h2>
+    </div>
+    <div class="detail-body" id="detailBody"></div>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div class="admin-overlay" id="adminOverlay">
+    <div class="admin-panel">
+      <div class="admin-header">
+        <h2>Admin Panel</h2>
+        <button class="close-btn" onclick="closeAdmin()">✕</button>
+      </div>
+
+      <!-- Password Screen -->
+      <div class="password-box" id="passwordScreen">
+        <p style="margin-bottom:16px;color:#aaa;font-size:14px;">Admin Password দিন</p>
+        <input type="password" id="adminPass" placeholder="Password" onkeydown="if(event.key==='Enter')checkPassword()">
+        <button onclick="checkPassword()">Login</button>
+        <p id="passError" style="color:#ff4655;font-size:13px;margin-top:10px;display:none;">Wrong password!</p>
+      </div>
+
+      <!-- Admin Content -->
+      <div class="admin-body hidden" id="adminContent">
+        <div class="admin-tabs">
+          <div class="admin-tab active" onclick="switchAdminTab('char')" id="adminTabChar">Add Char</div>
+          <div class="admin-tab" onclick="switchAdminTab('gun')" id="adminTabGun">Add Gun</div>
+          <div class="admin-tab" onclick="switchAdminTab('manage')" id="adminTabManage">Edit List</div>
+        </div>
+
+        <!-- Add Character Form -->
+        <div id="addCharForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Name (English)</label>
+              <input type="text" id="charNameEn" placeholder="Alok">
+            </div>
+            <div class="form-group">
+              <label>নাম (বাংলা)</label>
+              <input type="text" id="charNameBn" placeholder="আলোক">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Role (English)</label>
+              <input type="text" id="charRoleEn" placeholder="Support">
+            </div>
+            <div class="form-group">
+              <label>রোল (বাংলা)</label>
+              <input type="text" id="charRoleBn" placeholder="সাপোর্ট">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Skill Name (English)</label>
+              <input type="text" id="charSkillEn" placeholder="Drop the Beat">
+            </div>
+            <div class="form-group">
+              <label>স্কিল নাম (বাংলা)</label>
+              <input type="text" id="charSkillBn" placeholder="ড্রপ দ্য বিট">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Skill Type</label>
+            <select id="charType">
+              <option value="Active">Active</option>
+              <option value="Passive">Passive</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Description (English)</label>
+            <textarea id="charDescEn" placeholder="Skill description in English..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>বর্ণনা (বাংলা)</label>
+            <textarea id="charDescBn" placeholder="বাংলায় স্কিলের বর্ণনা..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Emoji / Icon (optional if image added)</label>
+            <input type="text" id="charEmoji" placeholder="🎧" maxlength="2">
+          </div>
+          <div class="form-group">
+            <label>Character Picture (Gallery)</label>
+            <div class="img-upload-box" onclick="document.getElementById('charImgInput').click()">
+              <img id="charImgPreview" class="img-preview" alt="Preview">
+              <div class="img-upload-text" id="charImgText">📷 Gallery থেকে ছবি সিলেক্ট করো</div>
+              <input type="file" id="charImgInput" accept="image/*" onchange="previewImage(this, 'charImgPreview', 'charImgText')">
+            </div>
+          </div>
+          <button class="save-btn" onclick="addCharacter()" id="charSaveBtn">+ Add Character</button>
+        </div>
+
+        <!-- Add Gun Form -->
+        <div id="addGunForm" class="hidden">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Name (English)</label>
+              <input type="text" id="gunNameEn" placeholder="Groza">
+            </div>
+            <div class="form-group">
+              <label>নাম (বাংলা)</label>
+              <input type="text" id="gunNameBn" placeholder="গ্রোজা">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Type (English)</label>
+              <input type="text" id="gunTypeEn" placeholder="Assault Rifle">
+            </div>
+            <div class="form-group">
+              <label>টাইপ (বাংলা)</label>
+              <input type="text" id="gunTypeBn" placeholder="অ্যাসল্ট রাইফেল">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Damage</label>
+              <input type="number" id="gunDamage" placeholder="61">
+            </div>
+            <div class="form-group">
+              <label>Range</label>
+              <input type="number" id="gunRange" placeholder="77">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Fire Rate</label>
+              <input type="number" id="gunRate" placeholder="58">
+            </div>
+            <div class="form-group">
+              <label>Accuracy</label>
+              <input type="number" id="gunAccuracy" placeholder="52">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description (English)</label>
+            <textarea id="gunDescEn" placeholder="Gun description..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>বর্ণনা (বাংলা)</label>
+            <textarea id="gunDescBn" placeholder="বাংলায় গানের বর্ণনা..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Emoji / Icon (optional if image added)</label>
+            <input type="text" id="gunEmoji" placeholder="🔫" maxlength="2">
+          </div>
+          <div class="form-group">
+            <label>Gun / Skin Picture (Gallery)</label>
+            <div class="img-upload-box" onclick="document.getElementById('gunImgInput').click()">
+              <img id="gunImgPreview" class="img-preview" alt="Preview">
+              <div class="img-upload-text" id="gunImgText">📷 Gallery থেকে ছবি সিলেক্ট করো</div>
+              <input type="file" id="gunImgInput" accept="image/*" onchange="previewImage(this, 'gunImgPreview', 'gunImgText')">
+            </div>
+          </div>
+          <button class="save-btn" onclick="addGun()" id="gunSaveBtn">+ Add Gun</button>
+        </div>
+
+        <!-- Manage / Edit List -->
+        <div id="manageForm" class="hidden">
+          <div class="admin-tabs" style="margin-bottom:12px">
+            <div class="admin-tab active" onclick="switchManageType('char')" id="manageTypeChar">Characters</div>
+            <div class="admin-tab" onclick="switchManageType('gun')" id="manageTypeGun">Guns</div>
+          </div>
+          <div class="manage-list" id="manageList"></div>
+        </div>
+
+        <div class="admin-msg" id="adminMsg"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========== DEFAULT DATA ==========
+    const defaultData = {
+      characters: [
+        {
+          id: 1,
+          name: { en: "Alok", bn: "আলোক" },
+          role: { en: "Support", bn: "সাপোর্ট" },
+          skill: { en: "Drop the Beat", bn: "ড্রপ দ্য বিট" },
+          desc: {
+            en: "Creates a 5m aura for 5 seconds that increases movement speed and restores HP to Alok and nearby teammates.",
+            bn: "৫ মিটার এলাকায় ৫ সেকেন্ডের জন্য অরা তৈরি করে যা মুভমেন্ট স্পিড বাড়ায় এবং আলোক ও কাছের টিমমেটদের HP রিস্টোর করে।"
+          },
+          type: "Active",
+          emoji: "🎧"
+        },
+        {
+          id: 2,
+          name: { en: "Chrono", bn: "ক্রোনো" },
+          role: { en: "Defensive", bn: "ডিফেন্সিভ" },
+          skill: { en: "Time Turner", bn: "টাইম টার্নার" },
+          desc: {
+            en: "Creates a force field that blocks enemy damage and projectiles for a few seconds. Allies inside get movement speed boost.",
+            bn: "একটি ফোর্স ফিল্ড তৈরি করে যা শত্রুর ড্যামেজ ও প্রজেক্টাইল ব্লক করে। ভিতরের অ্যালাইদের মুভমেন্ট স্পিড বাড়ে।"
+          },
+          type: "Active",
+          emoji: "🛡️"
+        },
+        {
+          id: 3,
+          name: { en: "K", bn: "কে" },
+          role: { en: "Rusher", bn: "রাশার" },
+          skill: { en: "Master of All", bn: "মাস্টার অফ অল" },
+          desc: {
+            en: "Converts EP into HP. When activated, recovers a large amount of HP instantly by consuming EP.",
+            bn: "EP কে HP তে রূপান্তর করে। অ্যাকটিভ করলে EP খরচ করে দ্রুত প্রচুর HP রিস্টোর হয়।"
+          },
+          type: "Active",
+          emoji: "⚡"
+        },
+        {
+          id: 4,
+          name: { en: "Dimitri", bn: "দিমিত্রি" },
+          role: { en: "Support", bn: "সাপোর্ট" },
+          skill: { en: "Sounds of Life", bn: "সাউন্ডস অফ লাইফ" },
+          desc: {
+            en: "Creates a healing field that continuously restores HP to himself and teammates inside the area.",
+            bn: "একটি হিলিং ফিল্ড তৈরি করে যা নিজের ও টিমমেটদের ক্রমাগত HP রিস্টোর করে।"
+          },
+          type: "Active",
+          emoji: "🎵"
+        },
+        {
+          id: 5,
+          name: { en: "Skyler", bn: "স্কাইলার" },
+          role: { en: "Utility", bn: "ইউটিলিটি" },
+          skill: { en: "Jammer", bn: "জ্যামার" },
+          desc: {
+            en: "Throws a device that destroys enemy gloo walls and disables enemy skills in the area for a short time.",
+            bn: "একটি ডিভাইস ছুঁড়ে শত্রুর গ্লু ওয়াল ধ্বংস করে এবং এলাকার শত্রুর স্কিল কিছুক্ষণের জন্য ডিজেবল করে।"
+          },
+          type: "Active",
+          emoji: "📡"
+        },
+        {
+          id: 6,
+          name: { en: "Hayato", bn: "হায়াতো" },
+          role: { en: "Rusher", bn: "রাশার" },
+          skill: { en: "Bushido", bn: "বুশিডো" },
+          desc: {
+            en: "The lower his HP, the higher his armor penetration. Gets stronger as he takes more damage.",
+            bn: "HP যত কমবে, আর্মার পেনিট্রেশন তত বাড়বে। যত বেশি ড্যামেজ খাবে তত শক্তিশালী হবে।"
+          },
+          type: "Passive",
+          emoji: "⚔️"
+        },
+        {
+          id: 7,
+          name: { en: "Moco", bn: "মোকো" },
+          role: { en: "Support", bn: "সাপোর্ট" },
+          skill: { en: "Hacker's Eye", bn: "হ্যাকারস আই" },
+          desc: {
+            en: "Enemies hit by Moco are marked and become visible to the whole team for a few seconds.",
+            bn: "মোকোর শটে আঘাত পাওয়া শত্রু মার্ক হয় এবং পুরো টিমের কাছে কয়েক সেকেন্ডের জন্য দৃশ্যমান থাকে।"
+          },
+          type: "Passive",
+          emoji: "👁️"
+        },
+        {
+          id: 8,
+          name: { en: "Kapella", bn: "কাপেলা" },
+          role: { en: "Support", bn: "সাপোর্ট" },
+          skill: { en: "Healing Song", bn: "হিলিং সং" },
+          desc: {
+            en: "Increases healing item effects and reduces HP loss of knocked down teammates.",
+            bn: "হিলিং আইটেমের ইফেক্ট বাড়ায় এবং নক ডাউন টিমমেটদের HP লস কমায়।"
+          },
+          type: "Passive",
+          emoji: "🎤"
+        },
+        {
+          id: 9,
+          name: { en: "Wukong", bn: "উকং" },
+          role: { en: "Stealth", bn: "স্টেলথ" },
+          skill: { en: "Camouflage", bn: "ক্যামোফ্লাজ" },
+          desc: {
+            en: "Transforms into a bush. Can move while transformed. Cooldown resets on kills.",
+            bn: "ঝোপে রূপান্তরিত হয়। ট্রান্সফর্ম অবস্থায় মুভ করতে পারে। কিল করলে কুলডাউন রিসেট হয়।"
+          },
+          type: "Active",
+          emoji: "🐵"
+        },
+        {
+          id: 10,
+          name: { en: "Kelly", bn: "কেলি" },
+          role: { en: "Rusher", bn: "রাশার" },
+          skill: { en: "Dash", bn: "ড্যাশ" },
+          desc: {
+            en: "Increases sprinting speed permanently. Great for rotating and rushing.",
+            bn: "স্প্রিন্টিং স্পিড স্থায়ীভাবে বাড়ায়। রোটেট ও রাশ করার জন্য দারুণ।"
+          },
+          type: "Passive",
+          emoji: "🏃"
+        },
+        {
+          id: 11,
+          name: { en: "Jota", bn: "জোটা" },
+          role: { en: "Rusher", bn: "রাশার" },
+          skill: { en: "Sustained Raids", bn: "সাসটেইন্ড রেইডস" },
+          desc: {
+            en: "Gains HP when eliminating enemies with Shotgun or SMG. Also heals slightly when damaging enemies.",
+            bn: "শটগান বা SMG দিয়ে কিল করলে HP পায়। শত্রুকে ড্যামেজ দিলেও একটু হিল হয়।"
+          },
+          type: "Passive",
+          emoji: "💪"
+        },
+        {
+          id: 12,
+          name: { en: "Orion", bn: "ওরিয়ন" },
+          role: { en: "Rusher", bn: "রাশার" },
+          skill: { en: "Fist of Vengeance", bn: "ফিস্ট অফ ভেঞ্জেন্স" },
+          desc: {
+            en: "Powerful close combat character with strong aggressive skills.",
+            bn: "শক্তিশালী ক্লোজ কমব্যাট ক্যারেক্টার। অ্যাগ্রেসিভ প্লেস্টাইলের জন্য ভালো।"
+          },
+          type: "Active",
+          emoji: "👊"
+        },
+        {
+          id: 13,
+          name: { en: "Steffie", bn: "স্টেফি" },
+          role: { en: "Support", bn: "সাপোর্ট" },
+          skill: { en: "Safe Zone", bn: "সেফ জোন" },
+          desc: {
+            en: "Creates a safe zone that blocks throwables and reduces bullet damage for allies inside.",
+            bn: "একটি সেফ জোন তৈরি করে যা থ্রোয়েবল ব্লক করে এবং ভিতরের অ্যালাইদের বুলেট ড্যামেজ কমায়।"
+          },
+          type: "Active",
+          emoji: "🛡️"
+        },
+        {
+          id: 14,
+          name: { en: "Clu", bn: "ক্লু" },
+          role: { en: "Scout", bn: "স্কাউট" },
+          skill: { en: "Tracing Steps", bn: "ট্রেসিং স্টেপস" },
+          desc: {
+            en: "Reveals standing enemies on the minimap within a certain range for a few seconds.",
+            bn: "নির্দিষ্ট রেঞ্জের মধ্যে দাঁড়ানো শত্রুদের মিনিম্যাপে দেখায় কয়েক সেকেন্ডের জন্য।"
+          },
+          type: "Active",
+          emoji: "🔎"
+        },
+        {
+          id: 15,
+          name: { en: "Rafael", bn: "রাফায়েল" },
+          role: { en: "Sniper", bn: "স্নাইপার" },
+          skill: { en: "Dead Silent", bn: "ডেড সাইলেন্ট" },
+          desc: {
+            en: "Silences sniper and marksman rifle shots. Knocked enemies expire faster.",
+            bn: "স্নাইপার ও মার্কসম্যান রাইফেলের সাউন্ড সাইলেন্ট করে। নক করা শত্রু দ্রুত মারা যায়।"
+          },
+          type: "Passive",
+          emoji: "🤫"
+        },
+        {
+          id: 16,
+          name: { en: "Homer", bn: "হোমার" },
+          role: { en: "Support", bn: "সাপোর্ট" },
+          skill: { en: "Energy Shield", bn: "এনার্জি শিল্ড" },
+          desc: {
+            en: "Provides defensive utility and team support skills.",
+            bn: "ডিফেন্সিভ ইউটিলিটি ও টিম সাপোর্ট স্কিল দেয়।"
+          },
+          type: "Active",
+          emoji: "🛡️"
+        },
+        {
+          id: 17,
+          name: { en: "Xayne", bn: "জেইন" },
+          role: { en: "Rusher", bn: "রাশার" },
+          skill: { en: "Aerial Acrobat", bn: "এরিয়াল অ্যাক্রোব্যাট" },
+          desc: {
+            en: "Specializes in mobility and aggressive plays.",
+            bn: "মোবিলিটি ও অ্যাগ্রেসিভ প্লেতে পারদর্শী।"
+          },
+          type: "Active",
+          emoji: "🤸"
+        },
+        {
+          id: 18,
+          name: { en: "Tatsuya", bn: "তাতসুয়া" },
+          role: { en: "Rusher", bn: "রাশার" },
+          skill: { en: "Teleport", bn: "টেলিপোর্ট" },
+          desc: {
+            en: "Can teleport short distances, great for flanking and escaping.",
+            bn: "অল্প দূরত্বে টেলিপোর্ট করতে পারে। ফ্ল্যাঙ্ক ও এস্কেপের জন্য দারুণ।"
+          },
+          type: "Active",
+          emoji: "⚡"
+        },
+        {
+          id: 19,
+          name: { en: "Shirou", bn: "শিরো" },
+          role: { en: "Support", bn: "সাপোর্ট" },
+          skill: { en: "Delivery", bn: "ডেলিভারি" },
+          desc: {
+            en: "Can supply items and support teammates effectively.",
+            bn: "টিমমেটদের আইটেম সাপ্লাই ও সাপোর্ট করতে পারে।"
+          },
+          type: "Active",
+          emoji: "📦"
+        },
+        {
+          id: 20,
+          name: { en: "Iris", bn: "আইরিস" },
+          role: { en: "Support", bn: "সাপোর্ট" },
+          skill: { en: "Healing", bn: "হিলিং" },
+          desc: {
+            en: "Strong healing and team support abilities.",
+            bn: "শক্তিশালী হিলিং ও টিম সাপোর্ট অ্যাবিলিটি।"
+          },
+          type: "Active",
+          emoji: "💚"
+        },
+        {
+          id: 21,
+          name: { en: "Andrew", bn: "অ্যান্ড্রু" },
+          role: { en: "Tank", bn: "ট্যাঙ্ক" },
+          skill: { en: "Armor Specialist", bn: "আর্মার স্পেশালিস্ট" },
+          desc: {
+            en: "Reduces vest durability loss and provides defensive benefits.",
+            bn: "ভেস্টের ডিউরেবিলিটি লস কমায় এবং ডিফেন্সিভ সুবিধা দেয়।"
+          },
+          type: "Passive",
+          emoji: "🛡️"
+        },
+        {
+          id: 22,
+          name: { en: "Laura", bn: "লরা" },
+          role: { en: "Sniper", bn: "স্নাইপার" },
+          skill: { en: "Sharpshooter", bn: "শার্পশুটার" },
+          desc: {
+            en: "Increases accuracy significantly when scoped in. Perfect for snipers.",
+            bn: "স্কোপ ইন করলে অ্যাকুরেসি অনেক বাড়ায়। স্নাইপারদের জন্য পারফেক্ট।"
+          },
+          type: "Passive",
+          emoji: "🎯"
+        },
+        {
+          id: 23,
+          name: { en: "Otho", bn: "ওথো" },
+          role: { en: "Rusher", bn: "রাশার" },
+          skill: { en: "Aggressive", bn: "অ্যাগ্রেসিভ" },
+          desc: {
+            en: "Strong aggressive playstyle character, good for close fights.",
+            bn: "শক্তিশালী অ্যাগ্রেসিভ প্লেস্টাইল। ক্লোজ ফাইটের জন্য ভালো।"
+          },
+          type: "Active",
+          emoji: "🔥"
+        },
+        {
+          id: 24,
+          name: { en: "Dasha", bn: "দাশা" },
+          role: { en: "Support", bn: "সাপোর্ট" },
+          skill: { en: "Team Boost", bn: "টিম বুস্ট" },
+          desc: {
+            en: "Provides useful team utility and support skills.",
+            bn: "টিমের জন্য ইউটিলিটি ও সাপোর্ট স্কিল দেয়।"
+          },
+          type: "Active",
+          emoji: "✨"
+        },
+        {
+          id: 25,
+          name: { en: "Kenta", bn: "কেন্তা" },
+          role: { en: "Tank", bn: "ট্যাঙ্ক" },
+          skill: { en: "Hardened", bn: "হার্ডেনড" },
+          desc: {
+            en: "High defense character, good for absorbing damage.",
+            bn: "হাই ডিফেন্স ক্যারেক্টার। ড্যামেজ শোষণের জন্য ভালো।"
+          },
+          type: "Passive",
+          emoji: "🥋"
+        }
+      ],
+      guns: [
+        {
+          id: 1,
+          name: { en: "Groza", bn: "গ্রোজা" },
+          type: { en: "Assault Rifle", bn: "অ্যাসল্ট রাইফেল" },
+          damage: 61,
+          range: 77,
+          rate: 58,
+          accuracy: 52,
+          desc: {
+            en: "One of the best ARs. High damage and good range. Excellent for mid to long range fights.",
+            bn: "সেরা AR গুলোর মধ্যে একটা। হাই ড্যামেজ ও ভালো রেঞ্জ। মিড টু লং রেঞ্জ ফাইটের জন্য চমৎকার।"
+          },
+          emoji: "🔫"
+        },
+        {
+          id: 2,
+          name: { en: "M1887", bn: "এম১৮৮৭" },
+          type: { en: "Shotgun", bn: "শটগান" },
+          damage: 100,
+          range: 16,
+          rate: 34,
+          accuracy: 12,
+          desc: {
+            en: "Highest damage shotgun. Deadly in close range. Perfect for rushing and close combat.",
+            bn: "সবচেয়ে বেশি ড্যামেজের শটগান। ক্লোজ রেঞ্জে মারাত্মক। রাশিং ও ক্লোজ কমব্যাটের জন্য পারফেক্ট।"
+          },
+          emoji: "💥"
+        },
+        {
+          id: 3,
+          name: { en: "AWM", bn: "এডব্লিউএম" },
+          type: { en: "Sniper Rifle", bn: "স্নাইপার রাইফেল" },
+          damage: 150,
+          range: 91,
+          rate: 27,
+          accuracy: 90,
+          desc: {
+            en: "The king of snipers. Extremely high damage. One shot potential with headshot.",
+            bn: "স্নাইপারদের রাজা। অনেক বেশি ড্যামেজ। হেডশটে ওয়ান শট পোটেনশিয়াল।"
+          },
+          emoji: "🎯"
+        },
+        {
+          id: 4,
+          name: { en: "MP40", bn: "এমপি৪০" },
+          type: { en: "SMG", bn: "এসএমজি" },
+          damage: 48,
+          range: 45,
+          rate: 80,
+          accuracy: 40,
+          desc: {
+            en: "Very high fire rate. Great for close to mid range. Easy to control.",
+            bn: "অনেক হাই ফায়ার রেট। ক্লোজ টু মিড রেঞ্জের জন্য দারুণ। কন্ট্রোল করা সহজ।"
+          },
+          emoji: "🔥"
+        },
+        {
+          id: 5,
+          name: { en: "SCAR", bn: "স্কার" },
+          type: { en: "Assault Rifle", bn: "অ্যাসল্ট রাইফেল" },
+          damage: 53,
+          range: 70,
+          rate: 60,
+          accuracy: 55,
+          desc: {
+            en: "Balanced and beginner friendly AR. Good accuracy and stable recoil.",
+            bn: "ব্যালেন্সড ও বিগিনার ফ্রেন্ডলি AR। ভালো অ্যাকুরেসি ও স্টেবল রিকয়েল।"
+          },
+          emoji: "🔫"
+        },
+        {
+          id: 6,
+          name: { en: "Woodpecker", bn: "উডপেকার" },
+          type: { en: "Marksman Rifle", bn: "মার্কসম্যান রাইফেল" },
+          damage: 72,
+          range: 80,
+          rate: 38,
+          accuracy: 75,
+          desc: {
+            en: "High armor penetration. Great for breaking gloo walls and dealing with armored enemies.",
+            bn: "হাই আর্মার পেনিট্রেশন। গ্লু ওয়াল ভাঙা ও আর্মারড শত্রুর বিরুদ্ধে দারুণ।"
+          },
+          emoji: "🪶"
+        },
+        {
+          id: 7,
+          name: { en: "UMP", bn: "ইউএমপি" },
+          type: { en: "SMG", bn: "এসএমজি" },
+          damage: 49,
+          range: 50,
+          rate: 70,
+          accuracy: 48,
+          desc: {
+            en: "Fast and mobile SMG. Good for aggressive playstyle and close fights.",
+            bn: "ফাস্ট ও মোবাইল SMG। অ্যাগ্রেসিভ প্লেস্টাইল ও ক্লোজ ফাইটের জন্য ভালো।"
+          },
+          emoji: "💨"
+        },
+        {
+          id: 8,
+          name: { en: "M24", bn: "এম২৪" },
+          type: { en: "Sniper Rifle", bn: "স্নাইপার রাইফেল" },
+          damage: 88,
+          range: 85,
+          rate: 42,
+          accuracy: 82,
+          desc: {
+            en: "Faster rate of fire than AWM. Good balance between damage and speed.",
+            bn: "AWM এর চেয়ে ফাস্টার রেট অফ ফায়ার। ড্যামেজ ও স্পিডের ভালো ব্যালেন্স।"
+          },
+          emoji: "🎯"
+        },
+        {
+          id: 9,
+          name: { en: "AK47", bn: "একে৪৭" },
+          type: { en: "Assault Rifle", bn: "অ্যাসল্ট রাইফেল" },
+          damage: 58,
+          range: 70,
+          rate: 55,
+          accuracy: 45,
+          desc: {
+            en: "High damage AR with strong recoil. Rewards good control.",
+            bn: "হাই ড্যামেজ AR। রিকয়েল বেশি, কন্ট্রোল ভালো হলে শক্তিশালী।"
+          },
+          emoji: "🔫"
+        },
+        {
+          id: 10,
+          name: { en: "M4A1", bn: "এম৪এ১" },
+          type: { en: "Assault Rifle", bn: "অ্যাসল্ট রাইফেল" },
+          damage: 50,
+          range: 68,
+          rate: 65,
+          accuracy: 60,
+          desc: {
+            en: "Balanced AR with low recoil. Good for beginners.",
+            bn: "ব্যালেন্সড AR। রিকয়েল কম, বিগিনারদের জন্য ভালো।"
+          },
+          emoji: "🔫"
+        },
+        {
+          id: 11,
+          name: { en: "Thompson", bn: "থম্পসন" },
+          type: { en: "SMG", bn: "এসএমজি" },
+          damage: 46,
+          range: 48,
+          rate: 75,
+          accuracy: 42,
+          desc: {
+            en: "High fire rate SMG, strong in close range fights.",
+            bn: "হাই ফায়ার রেট SMG। ক্লোজ রেঞ্জ ফাইটে শক্তিশালী।"
+          },
+          emoji: "🔥"
+        },
+        {
+          id: 12,
+          name: { en: "Vector", bn: "ভেক্টর" },
+          type: { en: "SMG", bn: "এসএমজি" },
+          damage: 44,
+          range: 42,
+          rate: 85,
+          accuracy: 38,
+          desc: {
+            en: "Extremely high fire rate. Deadly up close.",
+            bn: "অনেক হাই ফায়ার রেট। খুব কাছ থেকে মারাত্মক।"
+          },
+          emoji: "💨"
+        },
+        {
+          id: 13,
+          name: { en: "Kar98K", bn: "কার৯৮কে" },
+          type: { en: "Sniper Rifle", bn: "স্নাইপার রাইফেল" },
+          damage: 90,
+          range: 88,
+          rate: 27,
+          accuracy: 85,
+          desc: {
+            en: "Classic bolt-action sniper. High damage per shot.",
+            bn: "ক্লাসিক বোল্ট-অ্যাকশন স্নাইপার। প্রতি শটে হাই ড্যামেজ।"
+          },
+          emoji: "🎯"
+        },
+        {
+          id: 14,
+          name: { en: "M82B", bn: "এম৮২বি" },
+          type: { en: "Sniper Rifle", bn: "স্নাইপার রাইফেল" },
+          damage: 90,
+          range: 80,
+          rate: 30,
+          accuracy: 70,
+          desc: {
+            en: "Good against gloo walls and armored targets.",
+            bn: "গ্লু ওয়াল ও আর্মারড টার্গেটের বিরুদ্ধে ভালো।"
+          },
+          emoji: "🎯"
+        },
+        {
+          id: 15,
+          name: { en: "FAMAS", bn: "ফামাস" },
+          type: { en: "Assault Rifle", bn: "অ্যাসল্ট রাইফেল" },
+          damage: 52,
+          range: 65,
+          rate: 62,
+          accuracy: 58,
+          desc: {
+            en: "Burst-fire AR with good accuracy.",
+            bn: "বার্স্ট-ফায়ার AR। অ্যাকুরেসি ভালো।"
+          },
+          emoji: "🔫"
+        },
+        {
+          id: 16,
+          name: { en: "MAG-7", bn: "ম্যাগ-৭" },
+          type: { en: "Shotgun", bn: "শটগান" },
+          damage: 85,
+          range: 18,
+          rate: 40,
+          accuracy: 15,
+          desc: {
+            en: "Semi-auto shotgun. Strong close range option.",
+            bn: "সেমি-অটো শটগান। ক্লোজ রেঞ্জের জন্য শক্তিশালী।"
+          },
+          emoji: "💥"
+        }
+      ]
+    };
+
+    // ========== STATE ==========
+    let data = JSON.parse(JSON.stringify(defaultData));
+    let currentLang = 'en';
+    let currentTab = 'characters';
+    const ADMIN_PASSWORD = 'robiul123'; // <-- পাসওয়ার্ড এখানে চেঞ্জ করতে পারো
+
+    // Load from localStorage
+    function loadData() {
+      const saved = localStorage.getItem('robiul_ff_data');
+      if (saved) {
+        try {
+          data = JSON.parse(saved);
+        } catch(e) {
+          data = JSON.parse(JSON.stringify(defaultData));
+        }
+      }
+    }
+
+    function saveData() {
+      localStorage.setItem('robiul_ff_data', JSON.stringify(data));
+    }
+
+    // ========== RENDER ==========
+    function renderCharacters() {
+      const list = document.getElementById('characters-list');
+      list.innerHTML = '';
+      data.characters.forEach(char => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.name = (char.name.en + ' ' + char.name.bn).toLowerCase();
+        
+        const avatarContent = char.image 
+          ? `<img src="${char.image}" alt="${char.name.en}">` 
+          : (char.emoji || '👤');
+
+        card.innerHTML = `
+          <div class="card-header" onclick="openDetail('char', ${char.id})">
+            <div class="avatar">${avatarContent}</div>
+            <div class="card-info">
+              <h3>${char.name[currentLang]}</h3>
+              <div class="role">${char.role[currentLang]} • ${char.type}</div>
+            </div>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function renderGuns() {
+      const list = document.getElementById('guns-list');
+      list.innerHTML = '';
+      data.guns.forEach(gun => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.name = (gun.name.en + ' ' + gun.name.bn).toLowerCase();
+
+        const avatarContent = gun.image 
+          ? `<img src="${gun.image}" alt="${gun.name.en}">` 
+          : (gun.emoji || '🔫');
+
+        card.innerHTML = `
+          <div class="card-header" onclick="openDetail('gun', ${gun.id})">
+            <div class="avatar">${avatarContent}</div>
+            <div class="card-info">
+              <h3>${gun.name[currentLang]}</h3>
+              <div class="role">${gun.type[currentLang]}</div>
+            </div>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function openDetail(type, id) {
+      const isBn = currentLang === 'bn';
+      let item, html = '';
+      const bg = document.getElementById('detailBg');
+
+      if (type === 'char') {
+        item = data.characters.find(c => c.id === id);
+        if (!item) return;
+
+        const avatar = item.image 
+          ? `<img src="${item.image}" alt="${item.name.en}">` 
+          : (item.emoji || '👤');
+
+        // Background
+        if (item.image) {
+          bg.innerHTML = `<img class="detail-bg-img" src="${item.image}" alt="">`;
+        } else {
+          bg.innerHTML = `<div class="detail-bg-emoji">${item.emoji || '👤'}</div>`;
+        }
+
+        document.getElementById('detailTitle').textContent = item.name[currentLang];
+
+        html = `
+          <div class="detail-avatar">${avatar}</div>
+          <div class="detail-name">${item.name[currentLang]}</div>
+          <div class="detail-role">${item.role[currentLang]} • ${item.type}</div>
+          
+          <div class="detail-section">
+            <div class="label">${isBn ? 'স্কিল' : 'Skill'}</div>
+            <p style="color:#fff;font-weight:600;margin-bottom:8px">${item.skill[currentLang]}</p>
+            <p>${item.desc[currentLang]}</p>
+          </div>
+        `;
+      } else {
+        item = data.guns.find(g => g.id === id);
+        if (!item) return;
+
+        const avatar = item.image 
+          ? `<img src="${item.image}" alt="${item.name.en}">` 
+          : (item.emoji || '🔫');
+
+        // Background
+        if (item.image) {
+          bg.innerHTML = `<img class="detail-bg-img" src="${item.image}" alt="">`;
+        } else {
+          bg.innerHTML = `<div class="detail-bg-emoji">${item.emoji || '🔫'}</div>`;
+        }
+
+        document.getElementById('detailTitle').textContent = item.name[currentLang];
+
+        html = `
+          <div class="detail-avatar">${avatar}</div>
+          <div class="detail-name">${item.name[currentLang]}</div>
+          <div class="detail-role">${item.type[currentLang]}</div>
+          
+          <div class="detail-stats">
+            <div class="detail-stat">
+              <div class="value">${item.damage}</div>
+              <div class="name">${isBn ? 'ড্যামেজ' : 'Damage'}</div>
+            </div>
+            <div class="detail-stat">
+              <div class="value">${item.range}</div>
+              <div class="name">${isBn ? 'রেঞ্জ' : 'Range'}</div>
+            </div>
+            <div class="detail-stat">
+              <div class="value">${item.rate}</div>
+              <div class="name">${isBn ? 'ফায়ার রেট' : 'Fire Rate'}</div>
+            </div>
+            <div class="detail-stat">
+              <div class="value">${item.accuracy}</div>
+              <div class="name">${isBn ? 'অ্যাকুরেসি' : 'Accuracy'}</div>
+            </div>
+          </div>
+
+          <div class="detail-section" style="margin-top:16px">
+            <div class="label">${isBn ? 'বর্ণনা' : 'Description'}</div>
+            <p>${item.desc[currentLang]}</p>
+          </div>
+        `;
+      }
+
+      document.getElementById('detailBody').innerHTML = html;
+      document.getElementById('detailPage').classList.add('show');
+    }
+
+    function closeDetail() {
+      document.getElementById('detailPage').classList.remove('show');
+      document.getElementById('detailBg').innerHTML = '';
+    }
+
+    function switchTab(tab) {
+      currentTab = tab;
+      document.getElementById('tab-char').classList.toggle('active', tab === 'characters');
+      document.getElementById('tab-gun').classList.toggle('active', tab === 'guns');
+      document.getElementById('characters-section').classList.toggle('hidden', tab !== 'characters');
+      document.getElementById('guns-section').classList.toggle('hidden', tab !== 'guns');
+      document.getElementById('searchInput').value = '';
+      filterItems();
+    }
+
+    function toggleLang() {
+      currentLang = currentLang === 'en' ? 'bn' : 'en';
+      updateUI();
+    }
+
+    function updateUI() {
+      const isBn = currentLang === 'bn';
+      document.getElementById('langBtn').textContent = isBn ? 'English' : 'বাংলা';
+      document.getElementById('app-subtitle').textContent = isBn ? 'ক্যারেক্টার ও গান গাইড' : 'FF Character & Gun Guide';
+      document.getElementById('tab-char').textContent = isBn ? 'ক্যারেক্টার' : 'Characters';
+      document.getElementById('tab-gun').textContent = isBn ? 'গান' : 'Guns';
+      document.getElementById('char-title').textContent = isBn ? 'জনপ্রিয় ক্যারেক্টার' : 'Popular Characters';
+      document.getElementById('gun-title').textContent = isBn ? 'জনপ্রিয় অস্ত্র' : 'Popular Weapons';
+      document.getElementById('searchInput').placeholder = isBn ? 'ক্যারেক্টার বা গান খুঁজুন...' : 'Search character or gun...';
+      renderCharacters();
+      renderGuns();
+    }
+
+    function filterItems() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+      const section = currentTab === 'characters' ? 'characters-list' : 'guns-list';
+      const cards = document.getElementById(section).querySelectorAll('.card');
+
+      cards.forEach(card => {
+        const name = (card.dataset.name || '').toLowerCase();
+        if (!query) {
+          card.style.display = 'block';
+          return;
+        }
+        let match = name.includes(query);
+        if (!match) {
+          let qi = 0;
+          for (let i = 0; i < name.length && qi < query.length; i++) {
+            if (name[i] === query[qi]) qi++;
+          }
+          match = qi === query.length;
+        }
+        card.style.display = match ? 'block' : 'none';
+      });
+    }
+
+    // ========== IMAGE PREVIEW ==========
+    let charImageBase64 = '';
+    let gunImageBase64 = '';
+
+    function previewImage(input, previewId, textId) {
+      const file = input.files[0];
+      if (!file) return;
+
+      // Size limit ~1.5MB to avoid localStorage issues
+      if (file.size > 1.5 * 1024 * 1024) {
+        alert('ছবি অনেক বড়! 1.5MB এর নিচে ছবি দাও।');
+        input.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64 = e.target.result;
+        const preview = document.getElementById(previewId);
+        preview.src = base64;
+        preview.classList.add('show');
+        document.getElementById(textId).textContent = '✅ ছবি সিলেক্ট হয়েছে';
+
+        if (previewId === 'charImgPreview') {
+          charImageBase64 = base64;
+        } else {
+          gunImageBase64 = base64;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // ========== ADMIN ==========
+    function openAdmin() {
+      document.getElementById('adminOverlay').classList.add('show');
+      document.getElementById('passwordScreen').classList.remove('hidden');
+      document.getElementById('adminContent').classList.add('hidden');
+      document.getElementById('adminPass').value = '';
+      document.getElementById('passError').style.display = 'none';
+    }
+
+    function closeAdmin() {
+      document.getElementById('adminOverlay').classList.remove('show');
+    }
+
+    function checkPassword() {
+      const pass = document.getElementById('adminPass').value;
+      if (pass === ADMIN_PASSWORD) {
+        document.getElementById('passwordScreen').classList.add('hidden');
+        document.getElementById('adminContent').classList.remove('hidden');
+        document.getElementById('passError').style.display = 'none';
+      } else {
+        document.getElementById('passError').style.display = 'block';
+      }
+    }
+
+    let editingId = null;
+    let manageType = 'char';
+
+    function switchAdminTab(tab) {
+      document.getElementById('adminTabChar').classList.toggle('active', tab === 'char');
+      document.getElementById('adminTabGun').classList.toggle('active', tab === 'gun');
+      document.getElementById('adminTabManage').classList.toggle('active', tab === 'manage');
+      document.getElementById('addCharForm').classList.toggle('hidden', tab !== 'char');
+      document.getElementById('addGunForm').classList.toggle('hidden', tab !== 'gun');
+      document.getElementById('manageForm').classList.toggle('hidden', tab !== 'manage');
+      document.getElementById('adminMsg').className = 'admin-msg';
+
+      // Reset edit mode
+      editingId = null;
+      document.getElementById('charSaveBtn').textContent = '+ Add Character';
+      document.getElementById('gunSaveBtn').textContent = '+ Add Gun';
+      charImageBase64 = '';
+      gunImageBase64 = '';
+
+      if (tab === 'manage') {
+        renderManageList();
+      }
+    }
+
+    function switchManageType(type) {
+      manageType = type;
+      document.getElementById('manageTypeChar').classList.toggle('active', type === 'char');
+      document.getElementById('manageTypeGun').classList.toggle('active', type === 'gun');
+      renderManageList();
+    }
+
+    function renderManageList() {
+      const list = document.getElementById('manageList');
+      list.innerHTML = '';
+      const items = manageType === 'char' ? data.characters : data.guns;
+
+      if (items.length === 0) {
+        list.innerHTML = '<p style="text-align:center;color:#aaa;padding:20px;">কোনো আইটেম নেই</p>';
+        return;
+      }
+
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'manage-item';
+        const avatar = item.image 
+          ? `<img src="${item.image}" alt="">` 
+          : `<div class="m-avatar">${item.emoji || (manageType === 'char' ? '👤' : '🔫')}</div>`;
+        
+        div.innerHTML = `
+          ${avatar}
+          <div class="m-info">
+            <h4>${item.name.en}</h4>
+            <span>${item.image ? '✅ ছবি আছে' : '❌ ছবি নেই'}</span>
+          </div>
+          <button class="edit-btn" onclick="startEdit('${manageType}', ${item.id})">Edit</button>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    function startEdit(type, id) {
+      editingId = id;
+      const items = type === 'char' ? data.characters : data.guns;
+      const item = items.find(x => x.id === id);
+      if (!item) return;
+
+      if (type === 'char') {
+        switchAdminTab('char');
+        document.getElementById('charNameEn').value = item.name.en || '';
+        document.getElementById('charNameBn').value = item.name.bn || '';
+        document.getElementById('charRoleEn').value = item.role.en || '';
+        document.getElementById('charRoleBn').value = item.role.bn || '';
+        document.getElementById('charSkillEn').value = item.skill.en || '';
+        document.getElementById('charSkillBn').value = item.skill.bn || '';
+        document.getElementById('charType').value = item.type || 'Active';
+        document.getElementById('charDescEn').value = item.desc.en || '';
+        document.getElementById('charDescBn').value = item.desc.bn || '';
+        document.getElementById('charEmoji').value = item.emoji || '';
+        document.getElementById('charSaveBtn').textContent = '💾 Update Character';
+
+        if (item.image) {
+          charImageBase64 = item.image;
+          document.getElementById('charImgPreview').src = item.image;
+          document.getElementById('charImgPreview').classList.add('show');
+          document.getElementById('charImgText').textContent = '✅ বর্তমান ছবি (চেঞ্জ করতে নতুন সিলেক্ট করো)';
+        } else {
+          charImageBase64 = '';
+          document.getElementById('charImgPreview').classList.remove('show');
+          document.getElementById('charImgPreview').src = '';
+          document.getElementById('charImgText').textContent = '📷 Gallery থেকে ছবি সিলেক্ট করো';
+        }
+      } else {
+        switchAdminTab('gun');
+        document.getElementById('gunNameEn').value = item.name.en || '';
+        document.getElementById('gunNameBn').value = item.name.bn || '';
+        document.getElementById('gunTypeEn').value = item.type.en || '';
+        document.getElementById('gunTypeBn').value = item.type.bn || '';
+        document.getElementById('gunDamage').value = item.damage || '';
+        document.getElementById('gunRange').value = item.range || '';
+        document.getElementById('gunRate').value = item.rate || '';
+        document.getElementById('gunAccuracy').value = item.accuracy || '';
+        document.getElementById('gunDescEn').value = item.desc.en || '';
+        document.getElementById('gunDescBn').value = item.desc.bn || '';
+        document.getElementById('gunEmoji').value = item.emoji || '';
+        document.getElementById('gunSaveBtn').textContent = '💾 Update Gun';
+
+        if (item.image) {
+          gunImageBase64 = item.image;
+          document.getElementById('gunImgPreview').src = item.image;
+          document.getElementById('gunImgPreview').classList.add('show');
+          document.getElementById('gunImgText').textContent = '✅ বর্তমান ছবি (চেঞ্জ করতে নতুন সিলেক্ট করো)';
+        } else {
+          gunImageBase64 = '';
+          document.getElementById('gunImgPreview').classList.remove('show');
+          document.getElementById('gunImgPreview').src = '';
+          document.getElementById('gunImgText').textContent = '📷 Gallery থেকে ছবি সিলেক্ট করো';
+        }
+      }
+    }
+
+    function showMsg(text, type) {
+      const msg = document.getElementById('adminMsg');
+      msg.textContent = text;
+      msg.className = 'admin-msg ' + type;
+      setTimeout(() => msg.className = 'admin-msg', 3000);
+    }
+
+    function addCharacter() {
+      const nameEn = document.getElementById('charNameEn').value.trim();
+      const nameBn = document.getElementById('charNameBn').value.trim();
+      const roleEn = document.getElementById('charRoleEn').value.trim();
+      const roleBn = document.getElementById('charRoleBn').value.trim();
+      const skillEn = document.getElementById('charSkillEn').value.trim();
+      const skillBn = document.getElementById('charSkillBn').value.trim();
+      const type = document.getElementById('charType').value;
+      const descEn = document.getElementById('charDescEn').value.trim();
+      const descBn = document.getElementById('charDescBn').value.trim();
+      const emoji = document.getElementById('charEmoji').value.trim() || '👤';
+
+      if (!nameEn || !nameBn || !skillEn || !descEn) {
+        showMsg('Please fill required fields (Name EN, Name BN, Skill EN, Desc EN)', 'error');
+        return;
+      }
+
+      const charData = {
+        name: { en: nameEn, bn: nameBn },
+        role: { en: roleEn || 'Unknown', bn: roleBn || 'অজানা' },
+        skill: { en: skillEn, bn: skillBn || skillEn },
+        desc: { en: descEn, bn: descBn || descEn },
+        type: type,
+        emoji: emoji,
+        image: charImageBase64 || ''
+      };
+
+      if (editingId) {
+        // Update existing
+        const idx = data.characters.findIndex(c => c.id === editingId);
+        if (idx !== -1) {
+          data.characters[idx] = { ...data.characters[idx], ...charData };
+        }
+        showMsg('Character updated successfully! ✅', 'success');
+      } else {
+        // Add new
+        data.characters.push({ id: Date.now(), ...charData });
+        showMsg('Character added successfully! ✅', 'success');
+      }
+
+      saveData();
+      renderCharacters();
+
+      // Clear form & reset edit
+      editingId = null;
+      document.getElementById('charSaveBtn').textContent = '+ Add Character';
+      ['charNameEn','charNameBn','charRoleEn','charRoleBn','charSkillEn','charSkillBn','charDescEn','charDescBn','charEmoji'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('charImgInput').value = '';
+      document.getElementById('charImgPreview').classList.remove('show');
+      document.getElementById('charImgPreview').src = '';
+      document.getElementById('charImgText').textContent = '📷 Gallery থেকে ছবি সিলেক্ট করো';
+      charImageBase64 = '';
+    }
+
+    function addGun() {
+      const nameEn = document.getElementById('gunNameEn').value.trim();
+      const nameBn = document.getElementById('gunNameBn').value.trim();
+      const typeEn = document.getElementById('gunTypeEn').value.trim();
+      const typeBn = document.getElementById('gunTypeBn').value.trim();
+      const damage = document.getElementById('gunDamage').value;
+      const range = document.getElementById('gunRange').value;
+      const rate = document.getElementById('gunRate').value;
+      const accuracy = document.getElementById('gunAccuracy').value;
+      const descEn = document.getElementById('gunDescEn').value.trim();
+      const descBn = document.getElementById('gunDescBn').value.trim();
+      const emoji = document.getElementById('gunEmoji').value.trim() || '🔫';
+
+      if (!nameEn || !nameBn || !damage) {
+        showMsg('Please fill required fields (Name EN, Name BN, Damage)', 'error');
+        return;
+      }
+
+      const gunData = {
+        name: { en: nameEn, bn: nameBn },
+        type: { en: typeEn || 'Weapon', bn: typeBn || 'অস্ত্র' },
+        damage: parseInt(damage) || 0,
+        range: parseInt(range) || 0,
+        rate: parseInt(rate) || 0,
+        accuracy: parseInt(accuracy) || 0,
+        desc: { en: descEn || '', bn: descBn || descEn || '' },
+        emoji: emoji,
+        image: gunImageBase64 || ''
+      };
+
+      if (editingId) {
+        const idx = data.guns.findIndex(g => g.id === editingId);
+        if (idx !== -1) {
+          data.guns[idx] = { ...data.guns[idx], ...gunData };
+        }
+        showMsg('Gun updated successfully! ✅', 'success');
+      } else {
+        data.guns.push({ id: Date.now(), ...gunData });
+        showMsg('Gun added successfully! ✅', 'success');
+      }
+
+      saveData();
+      renderGuns();
+
+      // Clear form & reset edit
+      editingId = null;
+      document.getElementById('gunSaveBtn').textContent = '+ Add Gun';
+      ['gunNameEn','gunNameBn','gunTypeEn','gunTypeBn','gunDamage','gunRange','gunRate','gunAccuracy','gunDescEn','gunDescBn','gunEmoji'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('gunImgInput').value = '';
+      document.getElementById('gunImgPreview').classList.remove('show');
+      document.getElementById('gunImgPreview').src = '';
+      document.getElementById('gunImgText').textContent = '📷 Gallery থেকে ছবি সিলেক্ট করো';
+      gunImageBase64 = '';
+    }
+
+    // Init
+    loadData();
+    updateUI();
+  </script>
+</body>
+</html>
